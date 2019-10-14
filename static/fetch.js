@@ -1,9 +1,10 @@
 // encoding: utf-8
 // author: gendseo
 // date: 2019-10-12
+// updated: 2019-10-14
 
 new Promise((resolve, reject) => {
-    let req = new XMLHttpRequest()
+    const req = new XMLHttpRequest()
     req.open("GET", "/score", true)
     req.send()
     req.onreadystatechange = () => {
@@ -17,19 +18,31 @@ new Promise((resolve, reject) => {
 }).then((res) => {
     let data = []
     for (let key in res) {
-        let j = {}
-        j['name'] = key
-        j['value'] = res[key]
-        data.push(j)
+        data.push({'name': key, 'value': res[key]})
     }
-    let myChart = echarts.init(document.getElementById('echarts'));
-    let option = {
-        title: {text: '应用评分情况统计', left: 'center'},
-        tooltip: {trigger: 'item', formatter: "{b} : {c} ({d}%)"},
-        legend: {bottom: 0, left: 'center', data: Object.keys(res)},
-        series: [{type: 'pie', center: ['50%', '50%'], data: data}]
+    const option = {
+        title: {
+            text: '应用评分情况统计',
+            left: 'center'
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: "{b} : {c} ({d}%)"
+        },
+        legend: {
+            bottom: 0,
+            left: 'center',
+            data: Object.keys(res)
+        },
+        series: [{
+            type: 'pie',
+            radius: '75%',
+            center: ['50%', '50%'],
+            roseType: 'radius',
+            data: data
+        }]
     };
-    myChart.setOption(option)
+    echarts.init(document.getElementById('echarts')).setOption(option)
 }).catch((err) => {
     console.log(`err:`, err)
 })
