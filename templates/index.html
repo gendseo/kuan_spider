@@ -1,94 +1,116 @@
-{#encoding: utf-8#}
-{#author: gendseo#}
-{#date: 2019-10-12#}
+<!-- encoding: utf-8 -->
+<!-- author: gendseo -->
+<!-- date: 2019-10-12 -->
+<!-- updated: 2019-10-14 -->
 
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="referrer" content="no-referrer"/>
+    <meta name="referrer" content="no-referrer" />
     <link rel="icon" href="https://www.coolapk.com/static/img/under_logo.png" type="image/x-icon">
     <title>酷安-应用数据大分析</title>
     <link rel="stylesheet" href="/static/style.css">
     <script src="/static/echarts.min.js"></script>
     <script src="/static/fetch.js"></script>
 </head>
+
 <body>
-<div id="notice" style="visibility: hidden;"></div>
-<div id="main">
-    <div id="main-left">
-        <table>
-            <thead>
-            <tr id="header">
-                <th>序号</th>
-                <th>名称</th>
-                <th>图片</th>
-                <th>评分</th>
-                <th>大小</th>
-                <th>下载量</th>
-                <th>更新日期</th>
-                <th>简介</th>
-            </tr>
-            </thead>
-            <tbody style="overflow:auto">{% for app in apps %}
-                <tr onclick="toUrl('{{ app["url"] }}')">
-                    <td>{{ app['id'] }}</td>
-                    <td style="max-width: 50px;">{{ app['name'] }}</td>
-                    <td><img style="height: 28px;width: 28px"
-                             src="{{ app['img'] | default('https://www.coolapk.com/static/img/under_logo.png') }}"></td>
-                    <td>{{ app['score'] }}</td>
-                    <td>{{ app['size'] }}</td>
-                    <td>{{ app['downloads'] }}</td>
-                    <td>{{ app['update'] }}</td>
-                    <td style="max-width: 200px;">{{ app['description'] }}</td>
-                </tr>{% endfor %}</tbody>
-        </table>
+    <div id="notice" style="visibility: hidden;"></div>
+    <div id="main">
+        <div id="main-left">
+            <table>
+                <thead>
+                    <tr id="header">
+                        <th>序号</th>
+                        <th>名称</th>
+                        <th>图片</th>
+                        <th>版本</th>
+                        <th>评分</th>
+                        <th>评分人数</th>
+                        <th>关注数</th>
+                        <th>评论数</th>
+                        <th>大小</th>
+                        <th>下载量</th>
+                        <th>更新日期</th>
+                        <th>语言</th>
+                        <th>包名</th>
+                        <th>ROM</th>
+                        <th>开发者</th>
+                        <th>简介</th>
+                    </tr>
+                </thead>
+                <tbody>{% for app in apps %}
+                    <tr onclick="toUrl('{{ app["url"] }}')">
+                        <td style="max-width: 30px;">{{ app['id'] }}</td>
+                        <td style="max-width: 100px;">{{ app['name'] }}</td>
+                        <td><img style="height: 28px;width: 28px"
+                                src="{{ app['img'] | default('https://www.coolapk.com/static/img/under_logo.png') }}">
+                        </td>
+                        <td>{{ app['version'] }}</td>
+                        <td>{{ app['rank_num'] }}</td>
+                        <td>{{ app['rank_person'] }}</td>
+                        <td>{{ app['hot'] }}</td>
+                        <td>{{ app['comment'] }}</td>
+                        <td>{{ app['size'] }}</td>
+                        <td>{{ app['download'] }}</td>
+                        <td>{{ app['update'] }}</td>
+                        <td>{{ app['lang'] }}</td>
+                        <td style="max-width: 80px;">{{ app['pkg_name'] }}</td>
+                        <td>{{ app['rom'] }}</td>
+                        <td style="max-width: 100px;">{{ app['author'] }}</td>
+                        <td style="max-width: 200px;">{{ app['review'] }}</td>
+                    </tr>{% endfor %}</tbody>
+            </table>
+        </div>
+        <div id="main-right">
+            <div class="table-nav"><span>当前:<span id="isClick"></span></span>
+                <button class="table-nav-button" onclick="changeFlag()">切换点击状态</button>
+                <span>当前APP总数:<span style="color: rgb(92, 184, 92)">{{ apps|length }}</span></span></div>
+            <div id="echarts" style="width: 100%;height:50%;"></div>
+        </div>
     </div>
-    <div id="main-right">
-        <div class="table-nav"><span>当前:<span id="isClick"></span></span>
-            <button class="table-nav-button" onclick="changeFlag()">切换点击状态</button>
-            <span>当前APP总数:<span style="color: rgb(92, 184, 92)">{{ apps|length }}</span></span></div>
-        <div id="echarts" style="width: 100%;height:400px;"></div>
-    </div>
-</div>
-<script type="text/javascript">
-    let flag = true
+    <script type="text/javascript">
+        let flag = true
 
-    isClick(flag)
-
-    function isClick(flag) {
-        let isClickDom = document.getElementById('isClick')
-        if (flag) {
-            isClickDom.innerText = '点击可跳转'
-            isClickDom.style.color = 'rgb(92, 184, 92)'
-        } else {
-            isClickDom.innerText = '点击不可跳转'
-            isClickDom.style.color = '#ff0000'
-        }
-    }
-
-    function changeFlag() {
-        let noticeDom = document.getElementById('notice')
-        flag = !flag
         isClick(flag)
-        if (flag) {
-            noticeDom.innerText = '切换成功，当前可点击'
-            noticeDom.style.backgroundColor = '#5cb85c'
-            noticeDom.style.color = '#fff'
-        } else {
-            noticeDom.innerText = '切换成功，当前点击无效果'
-            noticeDom.style.backgroundColor = '#f2dede'
-            noticeDom.style.color = '#a94442'
-        }
-        noticeDom.style.visibility = 'visible'
-        setTimeout(() => {
-            noticeDom.style.visibility = 'hidden'
-        }, 1000)
-    }
 
-    function toUrl(url) {
-        if (flag) window.open(url)
-    }
-</script>
+        function isClick(flag) {
+            let isClickDom = document.getElementById('isClick')
+            if (flag) {
+                isClickDom.innerText = '点击可跳转'
+                isClickDom.style.color = 'rgb(92, 184, 92)'
+            } else {
+                isClickDom.innerText = '点击不可跳转'
+                isClickDom.style.color = '#ff0000'
+            }
+        }
+
+        function changeFlag() {
+            let noticeDom = document.getElementById('notice')
+            flag = !flag
+            isClick(flag)
+            if (flag) {
+                noticeDom.innerText = '切换成功，当前可点击'
+                noticeDom.style.backgroundColor = '#5cb85c'
+                noticeDom.style.color = '#fff'
+            } else {
+                noticeDom.innerText = '切换成功，当前点击无效果'
+                noticeDom.style.backgroundColor = '#f2dede'
+                noticeDom.style.color = '#a94442'
+            }
+            noticeDom.style.visibility = 'visible'
+            setTimeout(() => {
+                noticeDom.style.visibility = 'hidden'
+            }, 1000)
+        }
+
+        function toUrl(url) {
+            if (flag) window.open(url)
+        }
+
+    </script>
 </body>
+
 </html>
