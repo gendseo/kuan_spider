@@ -54,7 +54,7 @@ pip3 install Flask Flask-SQLAlchemy requests bs4 lxml
 ## 如何运行
 
 1. 运行 spider.py 文件获取数据
-    1. 会自动在当前目录下建 sqlite3 数据库
+    1. 自动在当前目录下建 sqlite3 数据库
     2. 为节省对应站点的资源，默认只爬十页（一页10条数据）
 2. 运行 api.py 文件运行 web 服务
     1. 通过 `http://localhost:5000` 访问主页
@@ -63,7 +63,6 @@ pip3 install Flask Flask-SQLAlchemy requests bs4 lxml
 ## 进度
 
 - [x] 基本功能
-- [ ] 打包自动化运行
 
 ## 更新日志
 
