@@ -1,13 +1,17 @@
 # encoding: utf-8
 # author: gendseo
 # date: 2019-10-12
-# updated: 2019-10-14
+# updated: 2019-10-16
 
-# service 包用于 api 业务逻辑
+'''
+    service 模块
+
+    提供常用的 api 业务逻辑
+'''
 
 
 # 统计评分区间个数
-def count_rank_num(l):
+def count_rank(l):
     result = {}
     c1, c2, c3, c4, c5 = 0, 0, 0, 0, 0
     for i in l:

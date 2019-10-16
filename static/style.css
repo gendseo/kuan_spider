@@ -1,7 +1,25 @@
 /*encoding: utf-8*/
 /*author: gendseo*/
 /*date: 2019-10-12*/
-/* updated: 2019-10-14 */
+/* updated: 2019-10-16 */
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+#loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #828282;
+    width: 100%;
+    height: 100vh;
+    z-index: 999;
+    position: fixed;
+}
 
 #main {
     width: 100%;
@@ -13,20 +31,24 @@
 
 #main-left {
     height: 100%;
-    width: 60%;
-    max-width: 60%;
+    width: 50%;
+    max-width: 50%;
+
+    padding: 6px 10px;
 }
 
 #main-right {
     height: 100%;
-    width: 40%;
-    max-width: 40%;
-    margin-left: 60%;
+    width: 50%;
+    max-width: 50%;
+    margin-left: 50%;
     position: fixed;
+
+    display: flex;
+    flex-direction: column;
 }
 
 .table-nav {
-    margin-bottom: 2.5rem;
     display: flex;
     flex-direction: row-reverse;
     justify-content: center;
@@ -43,7 +65,7 @@
     font-size: 14px;
     cursor: pointer;
     border-radius: 6px;
-    background-color: gray;
+    background-color: #ff8080;
 }
 
 .table-nav>* {
@@ -56,43 +78,32 @@ table {
     position: relative;
     border-collapse: collapse;
     text-align: center;
-    border: 1px solid #c6c6c6 !important;
+    border: 1px solid #c6c6c6;
 }
 
 table th {
     border-collapse: collapse;
-    border-right: 1px solid #c6c6c6 !important;
-    border-bottom: 1px solid #c6c6c6 !important;
-    background-color: #dff0d8 !important;
-    color: #3c763d;
-    font-size: 1rem;
-    font-weight: normal;
-    padding: 5px;
-    height: 2rem;
+    border: 1px solid #c6c6c6;
+    background-color: #008ACD;
+    color: #fff;
+    font-size: 12px;
+    padding: 2px;
+    line-height: 20px;
 }
 
 table td {
     border-collapse: collapse;
-    border-right: 1px solid #c6c6c6 !important;
-    border-bottom: 1px solid #c6c6c6 !important;
+    border-right: 1px solid #c6c6c6;
+    border-bottom: 1px solid #c6c6c6;
     font-size: 12px;
-    font-weight: normal;
     word-break: break-all;
 }
 
-table tr:nth-child(odd) {
-    background-color: #fff !important;
-}
-
-table tr:nth-child(even) {
-    background-color: #f8f8f8 !important;
-}
-
 tbody tr:hover {
-    background: linear-gradient(#fff, #dbe2ef);
+    background: linear-gradient(#fff, rgb(255, 238, 220));
     transform: scale(1.002);
-    -webkit-transition-duration: .3s;
-    transition-duration: .3s;
+    -webkit-transition-duration: .2s;
+    transition-duration: .2s;
     cursor: pointer;
 }
 
@@ -101,7 +112,7 @@ tbody tr:hover {
     position: fixed;
     top: 0;
     left: 0;
-    width: 60%;
+    width: 50%;
     height: 1.6rem;
     line-height: 32px;
     padding: 8px;
