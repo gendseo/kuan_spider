@@ -71,6 +71,7 @@ pip3 install Flask Flask-SQLAlchemy requests bs4 lxml
     2. 完成（enjoy；
 
 时序图：
+
 ![时序图](https://raw.githubusercontent.com/gendseo/kuan_spider/master/screenshots/sequence_diagram.png)
 
 **数据的流向是异步的，第1步开启爬虫主体后就可以运行第2步的 web 服务，请不断刷新查看数据变化（新姿势；**
