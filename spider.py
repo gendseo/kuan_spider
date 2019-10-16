@@ -161,7 +161,7 @@ def run():
     db.create_all()  # 创建数据库
     # [x,y) 页
     x = 1
-    y = 10()  # 10 '前十页' | _get_pages() '所有页'
+    y = 10  # 10 '前十页' | _get_pages() '所有页'
     for i in range(x, y + 1):
         # 一次性提交该页的所有 App
         db.session.add_all(_get_page_apps(i))
