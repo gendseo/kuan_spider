@@ -1,25 +1,40 @@
 <!-- encoding: utf-8 -->
 <!-- author: gendseo -->
 <!-- date: 2019-10-12 -->
-<!-- updated: 2019-10-14 -->
+<!-- updated: 2019-10-16 -->
 
 <!DOCTYPE html>
 <html lang="zh-CN">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="referrer" content="no-referrer" />
-    <link rel="icon" href="https://www.coolapk.com/static/img/under_logo.png" type="image/x-icon">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" src="/static/logo.png" type="image/x-icon">
     <title>酷安-应用数据大分析</title>
     <link rel="stylesheet" href="/static/style.css">
+    <script>
+        document.onreadystatechange = () => {
+            if (document.readyState === 'complete') {
+                document.getElementById('loading').style.display = 'none'
+                document.getElementById('main-left').style.display = 'flex'
+            }
+        }
+    </script>
+    <!-- 图表依赖 -->
     <script src="/static/echarts.min.js"></script>
-    <script src="/static/fetch.js"></script>
+    <!-- 图表主题 -->
+    <script src="/static/macarons.js"></script>
 </head>
 
 <body>
+    <div id="loading">
+        <img src="/static/loading.gif">
+        <span style="margin-top: 2rem;color: #fff">努力加载中...</span>
+    </div>
     <div id="notice" style="visibility: hidden;"></div>
     <div id="main">
-        <div id="main-left">
+        <div id="main-left" style="display: none;">
             <table>
                 <thead>
                     <tr id="header">
@@ -28,29 +43,30 @@
                         <th>图片</th>
                         <th>版本</th>
                         <th>评分</th>
-                        <th>评分人数</th>
+                        <th>评分次数</th>
                         <th>关注数</th>
                         <th>评论数</th>
                         <th>大小</th>
                         <th>下载量</th>
                         <th>更新日期</th>
                         <th>语言</th>
-                        <th>包名</th>
+                        <th>应用包名</th>
                         <th>ROM</th>
                         <th>开发者</th>
                         <th>简介</th>
                     </tr>
                 </thead>
-                <tbody>{% for app in apps %}
-                    <tr onclick="toUrl('{{ app["url"] }}')">
-                        <td style="max-width: 30px;">{{ app['id'] }}</td>
-                        <td style="max-width: 100px;">{{ app['name'] }}</td>
-                        <td><img style="height: 28px;width: 28px"
-                                src="{{ app['img'] | default('https://www.coolapk.com/static/img/under_logo.png') }}">
+                <tbody>
+                    {% for app in apps %}
+                    <tr id="app-{{loop.index0}}" onclick="toUrl('{{ app["url"] }}')">
+                        <td>{{ app['id'] }}</td>
+                        <td style="max-width: 150px;">{{ app['name'] }}</td>
+                        <td>
+                            <img style="height: 24px;width: 24px" src="/static/icon/{{app['id']}}.png">
                         </td>
                         <td>{{ app['version'] }}</td>
+                        <td>{{ app['rank'] }}</td>
                         <td>{{ app['rank_num'] }}</td>
-                        <td>{{ app['rank_person'] }}</td>
                         <td>{{ app['hot'] }}</td>
                         <td>{{ app['comment'] }}</td>
                         <td>{{ app['size'] }}</td>
@@ -59,21 +75,31 @@
                         <td>{{ app['lang'] }}</td>
                         <td style="max-width: 80px;">{{ app['pkg_name'] }}</td>
                         <td>{{ app['rom'] }}</td>
-                        <td style="max-width: 100px;">{{ app['author'] }}</td>
+                        <td style="max-width: 120px;">{{ app['author'] }}</td>
                         <td style="max-width: 200px;">{{ app['review'] }}</td>
-                    </tr>{% endfor %}</tbody>
+                    </tr>
+                    {% endfor %}
+                </tbody>
             </table>
         </div>
         <div id="main-right">
-            <div class="table-nav"><span>当前:<span id="isClick"></span></span>
+            <div class="table-nav">
+                <span>当前:<span id="isClick"></span></span>
                 <button class="table-nav-button" onclick="changeFlag()">切换点击状态</button>
-                <span>当前APP总数:<span style="color: rgb(92, 184, 92)">{{ apps|length }}</span></span></div>
-            <div id="echarts" style="width: 100%;height:50%;"></div>
+                <span>当前APP总数:<span style="color: rgb(92, 184, 92)">{{ apps|length }}</span></span>
+                <button class="table-nav-button" style="background-color: #008ACD;" onclick="goTop()">返回顶部</button>
+            </div>
+            <br />
+            <div id="echarts1" style="width: 100%;height: 40%"></div>
+            <br />
+            <div id="echarts2" style="width: 100%;height: 60%"></div>
         </div>
     </div>
+    <!-- 获取统计接口 -->
+    <script src="/static/fetch.js"></script>
+    <!-- 页面逻辑 -->
     <script type="text/javascript">
         let flag = true
-
         isClick(flag)
 
         function isClick(flag) {
@@ -97,8 +123,8 @@
                 noticeDom.style.color = '#fff'
             } else {
                 noticeDom.innerText = '切换成功，当前点击无效果'
-                noticeDom.style.backgroundColor = '#f2dede'
-                noticeDom.style.color = '#a94442'
+                noticeDom.style.backgroundColor = '#ff8080'
+                noticeDom.style.color = '#fff'
             }
             noticeDom.style.visibility = 'visible'
             setTimeout(() => {
@@ -110,6 +136,12 @@
             if (flag) window.open(url)
         }
 
+        function goTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'instant' // 'instant' 瞬间滚动 | 'smooth' 平滑滚动
+            })
+        }
     </script>
 </body>
 

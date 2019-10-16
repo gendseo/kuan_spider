@@ -1,0 +1,9 @@
+@startuml data_flow
+ditaa(--no-shadows)
++---------+     /--------\     +-------+
+|spider.py+<--->+cAAA    +<--->+api.py |
+|         |     |  Data  |     |       |
+|c1AB{io} |     |  Base  |     |cRED{d}|
++---------+     |     {s}|     +-------+
+                \---+----/
+@enduml
