@@ -15,11 +15,11 @@
 
 ## 截图
 
-![image1](https://github.com/gendsen/kuan_spider/raw/master/screenshots/1.png)
-![image2](https://github.com/gendsen/kuan_spider/raw/master/screenshots/2.png)
-![image3](https://github.com/gendsen/kuan_spider/raw/master/screenshots/3.png)
-![image4](https://github.com/gendsen/kuan_spider/raw/master/screenshots/4.png)
-![image5](https://github.com/gendsen/kuan_spider/raw/master/screenshots/5.png)
+![image1](https://raw.githubusercontent.com/gendseo/kuan_spider/master/screenshots/1.jpg)
+![image2](https://raw.githubusercontent.com/gendseo/kuan_spider/master/screenshots/2.jpg)
+![image3](https://raw.githubusercontent.com/gendseo/kuan_spider/master/screenshots/3.jpg)
+![image4](https://raw.githubusercontent.com/gendseo/kuan_spider/master/screenshots/4.jpg)
+![image5](https://raw.githubusercontent.com/gendseo/kuan_spider/master/screenshots/5.jpg)
 
 ## 目录结构
 
@@ -71,10 +71,10 @@ pip3 install Flask Flask-SQLAlchemy requests bs4 lxml
     2. 完成（enjoy；
 
 时序图：
-![时序图](https://github.com/gendsen/kuan_spider/raw/master/screenshots/sequence_diagram.png)
+![时序图](https://raw.githubusercontent.com/gendseo/kuan_spider/master/screenshots/sequence_diagram.png)
 
 **数据的流向是异步的，第1步开启爬虫主体后就可以运行第2步的 web 服务，请不断刷新查看数据变化（新姿势；**
-![数据流向](https://github.com/gendsen/kuan_spider/raw/master/screenshots/data_flow.png)
+![数据流向](https://raw.githubusercontent.com/gendseo/kuan_spider/master/screenshots/data_flow.png)
 
 ## 进度
 
